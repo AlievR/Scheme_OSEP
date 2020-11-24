@@ -20,7 +20,8 @@ const fileFilter = (req, file, cb) => {
         if (ext.includes(allowed[i])) {
             cb(null, true);
         } else {
-            cb(null, false); // handle error in middleware, not here
+            cb( null, false)
+
         }
     }
 }

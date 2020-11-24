@@ -9,19 +9,26 @@ const router = Router()
 //Добавление одного файла
 router.post('/:id', upload.single('file'), async (req, res) => {
     try {
-        const size = convert(req.file.size)
 
-/*
-        const candidat_name = await schems_lists.findOne({ name }, (err) => {
-            if (err) {
-                return res.status(500).json({ message: 'Возникла непредвиденная ошибка при получении объекта!' })
-            }
-        })
-
-        if (candidat_name) {
-            return res.status(400).json({ message: 'Система с таким именем уже существует!' })
+        let filedata = req.file;
+        if (!filedata) {
+            return res.status(500).json({ message: 'Данный формат файла не поддерживается!' })
         }
-*/
+
+        const size = convert(req.file.size)
+        const name = req.file.originalname
+
+        const candidat_name = await schems_lists.findOne(
+            { name: name, id_group: req.params.id },
+            (err) => {
+                if (err) {
+                    return res.status(500).json({ message: 'Возникла непредвиденная ошибка при получении файлов' })
+                }
+            })
+        if (candidat_name) {
+            return res.status(400).json({ message: 'Файл с таким именем уже существует!' })
+        }
+
         const system = new schems_lists({
             name: req.file.originalname,
             fileSrc: req.file.path,

@@ -7,8 +7,6 @@ router.post('/systems', async (req, res) => {
 
         const { name, gateway } = req.body
 
-        console.log("name"+name)
-
         if (name === "" | gateway === "") {
             return res.status(400).json({ message: 'Поле не может быть пустым' })
         }
