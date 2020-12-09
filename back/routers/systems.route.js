@@ -44,6 +44,7 @@ router.get('/systems', async (req, res) => {
                 }
             })
             res.status(201).json(systems)
+        
     }
     catch {
         res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова!' })
